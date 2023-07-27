@@ -21,32 +21,26 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.example.jpmorganweatherapp.model.City
-import com.example.jpmorganweatherapp.model.Clouds
-import com.example.jpmorganweatherapp.model.Coord
-import com.example.jpmorganweatherapp.model.Main
-import com.example.jpmorganweatherapp.model.Sys
-import com.example.jpmorganweatherapp.model.Weather
-import com.example.jpmorganweatherapp.model.Wind
+import com.example.jpmorganweatherapp.viewmodel.WeatherLocationsViewModel
 
 @Composable
 fun WeatherInfoScreen(
-    city: City, cityName: String,
-    searchCity: (String) -> Unit
+    city: City,
+    viewModel: WeatherLocationsViewModel
 ) {
     Card {
         Column(
             modifier = Modifier.padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            var text by rememberSaveable { mutableStateOf(cityName) }
+            var text by rememberSaveable { mutableStateOf(viewModel.cityName.value) }
             TextField(
                 value = text,
                 onValueChange = {
-                                text = it
+                    text = it
                 },
                 label = { Text("Search By City") }
             )
@@ -55,7 +49,7 @@ fun WeatherInfoScreen(
             Button(
                 onClick = {
                     Log.e("Q", text)
-                    searchCity(text)
+                    viewModel.getLocation(text)
                     Toast.makeText(
                         context, "This is my Toast message!",
                         Toast.LENGTH_LONG
@@ -84,15 +78,15 @@ fun WeatherInfoScreen(
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun Preview() {
-    val weatherList = mutableListOf<Weather>()
-    val weather = Weather(11, "", "", "")
-    weatherList.add(weather)
-    val city = City(
-        Coord(12.23, 13.0), weatherList, "", Main(12.1, 12.2, 78.3, 98.3, 34, 323), 1321,
-        Wind(3234, 3223), Clouds(21), 34, Sys(234, 12, "US", 234, 65), 323, 12, "birmingham", 23
-    )
-    WeatherInfoScreen(city, "birmingham") {}
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun Preview() {
+//    val weatherList = mutableListOf<Weather>()
+//    val weather = Weather(11, "", "", "")
+//    weatherList.add(weather)
+//    val city = City(
+//        Coord(12.23, 13.0), weatherList, "", Main(12.1, 12.2, 78.3, 98.3, 34, 323), 1321,
+//        Wind(3234, 3223), Clouds(21), 34, Sys(234, 12, "US", 234, 65), 323, 12, "birmingham", 23
+//    )
+////    WeatherInfoScreen(city, "birmingham") {}
+//}

@@ -1,5 +1,8 @@
 package com.example.jpmorganweatherapp.model
 
+import androidx.annotation.Keep
+
+@Keep
 data class City (
     val coord: Coord?,
     val weather: List<Weather>?,
