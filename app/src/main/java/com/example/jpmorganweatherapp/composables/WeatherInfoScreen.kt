@@ -1,6 +1,5 @@
 package com.example.jpmorganweatherapp.composables
 
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
@@ -23,12 +22,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
-import com.example.jpmorganweatherapp.model.City
 import com.example.jpmorganweatherapp.viewmodel.WeatherLocationsViewModel
 
 @Composable
 fun WeatherInfoScreen(
-    city: City,
     viewModel: WeatherLocationsViewModel
 ) {
     Card {
@@ -37,18 +34,19 @@ fun WeatherInfoScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             var text by rememberSaveable { mutableStateOf(viewModel.cityName.value) }
-            TextField(
-                value = text,
-                onValueChange = {
-                    text = it
-                },
-                label = { Text("Search By City") }
-            )
+            text?.let {
+                TextField(
+                    value = it,
+                    onValueChange = {
+                        text = it
+                    },
+                    label = { Text("Search By City") }
+                )
+            }
             Spacer(modifier = Modifier.height(16.dp))
             val context = LocalContext.current
             Button(
                 onClick = {
-                    Log.e("Q", text)
                     viewModel.getLocation(text)
                     Toast.makeText(
                         context, "Searching",
@@ -59,17 +57,17 @@ fun WeatherInfoScreen(
             ) {
                 Text(text = "Search")
             }
-            Text(text = "City: ${city.name}")
+            Text(text = "City: ${viewModel.city.value?.name}")
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            Text(text = "Temperature: ${city.main?.temp}°C")
+            Text(text = "Temperature: ${viewModel.city.value?.main?.temp}°C")
 
             Spacer(modifier = Modifier.height(16.dp))
 
             Image(
                 painter = rememberAsyncImagePainter(
-                    "http://openweathermap.org/img/w/${city.weather?.get(0)?.icon}.png"
+                    "http://openweathermap.org/img/w/${viewModel.city.value?.weather?.get(0)?.icon}.png"
                 ),
                 contentDescription = "Weather Icon",
                 modifier = Modifier.size(100.dp)

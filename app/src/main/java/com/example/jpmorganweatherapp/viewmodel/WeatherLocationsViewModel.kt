@@ -1,7 +1,7 @@
 package com.example.jpmorganweatherapp.viewmodel
 
 import android.util.Log
-import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -22,36 +22,36 @@ import javax.inject.Inject
 class WeatherLocationsViewModel @Inject constructor(private val weatherLocationsRepository: WeatherLocationsRepository) :
     ViewModel() {
     private val errorMessage = MutableLiveData<String>()
-    var city =
-        City(null, null, null, null, null, null, null, null, null, null, null, null, null)
-
-    var cityName = mutableStateOf("")
+    private val _city = MutableLiveData<City>()
+    val city: LiveData<City> get() = _city
+    private val _cityName = MutableLiveData("")
+    val cityName: LiveData<String> get() = _cityName
     private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
         onError("Exception handled: ${throwable.localizedMessage}")
     }
 
     init {
-        getLocation(cityName.value)
+        getLocation(_cityName.value)
     }
 
-    fun getLocation(cityName: String) {
+    fun getLocation(cityName: String?) {
         viewModelScope.launch(exceptionHandler) {
-            weatherLocationsRepository.getLocation(cityName, API_KEY)
-                .catch { exception -> onError(exception.message.toString()) }
-                .collect { response ->
-                    if (response.isSuccess) {
-                        withContext(Dispatchers.Main) {
-                            response.getOrNull().also {
-                                if (it != null) {
-                                    city = it
-                                    Log.e("Q", "city" + city)
+            if (cityName != null) {
+                weatherLocationsRepository.getLocation(cityName, API_KEY)
+                    .catch { exception -> onError(exception.message.toString()) }
+                    .collect { response ->
+                        if (response.isSuccess) {
+                            withContext(Dispatchers.Main) {
+                                response.getOrNull().also {
+                                    if (it != null) {
+                                        _city.value = it
+                                        Log.e("Q", "city" + city.value)
+                                    }
                                 }
                             }
                         }
-                    } else {
-                        Log.e("response reject message", response.exceptionOrNull().toString())
                     }
-                }
+            }
         }
     }
 

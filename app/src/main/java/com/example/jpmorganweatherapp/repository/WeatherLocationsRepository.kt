@@ -1,6 +1,5 @@
 package com.example.jpmorganweatherapp.repository
 
-import android.util.Log
 import com.example.jpmorganweatherapp.model.City
 import com.example.jpmorganweatherapp.network.OpenWeatherService
 import kotlinx.coroutines.Dispatchers
@@ -21,7 +20,6 @@ class WeatherLocationsRepository @Inject constructor(private val itemsService: O
         return flow {
             val result = itemsService.getLocation(cityName, aaid)
             if(result.isSuccessful){
-                Log.e("flow", result.toString())
                 emit(Result.success(result.body()))
             }
         }.flowOn(Dispatchers.IO)
