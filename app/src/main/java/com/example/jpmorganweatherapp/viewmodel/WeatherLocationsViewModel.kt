@@ -35,7 +35,6 @@ class WeatherLocationsViewModel @Inject constructor(private val weatherLocations
     }
 
     fun getLocation(cityName: String) {
-        Log.e("getLocation", cityName)
         viewModelScope.launch(exceptionHandler) {
             weatherLocationsRepository.getLocation(cityName, API_KEY)
                 .catch { exception -> onError(exception.message.toString()) }

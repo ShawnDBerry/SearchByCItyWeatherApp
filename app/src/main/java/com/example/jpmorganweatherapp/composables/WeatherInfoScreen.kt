@@ -51,7 +51,7 @@ fun WeatherInfoScreen(
                     Log.e("Q", text)
                     viewModel.getLocation(text)
                     Toast.makeText(
-                        context, "This is my Toast message!",
+                        context, "Searching",
                         Toast.LENGTH_LONG
                     ).show()
                 },
