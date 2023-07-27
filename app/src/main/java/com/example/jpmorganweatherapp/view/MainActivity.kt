@@ -70,7 +70,7 @@ class MainActivity : ComponentActivity() {
                             modifier = Modifier.fillMaxSize(),
                             color = MaterialTheme.colors.background
                         ) {
-                            WeatherInfoScreen(viewModel.location.value, viewModel = viewModel)
+                            WeatherInfoScreen(viewModel.city, viewModel = viewModel)
                         }
                     }
                 }

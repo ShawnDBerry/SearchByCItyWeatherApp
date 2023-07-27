@@ -41,7 +41,7 @@ data class Main(
 )
 
 data class Wind(
-    val speed: Long,
+    val speed: Double,
     val deg: Long,
 )
 

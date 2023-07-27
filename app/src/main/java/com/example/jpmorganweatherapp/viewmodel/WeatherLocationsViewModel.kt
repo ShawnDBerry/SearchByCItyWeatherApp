@@ -22,9 +22,9 @@ import javax.inject.Inject
 class WeatherLocationsViewModel @Inject constructor(private val weatherLocationsRepository: WeatherLocationsRepository) :
     ViewModel() {
     private val errorMessage = MutableLiveData<String>()
-    private var city =
+    var city =
         City(null, null, null, null, null, null, null, null, null, null, null, null, null)
-    var location = mutableStateOf(city)
+
     var cityName = mutableStateOf("")
     private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
         onError("Exception handled: ${throwable.localizedMessage}")
@@ -42,10 +42,10 @@ class WeatherLocationsViewModel @Inject constructor(private val weatherLocations
                 .collect { response ->
                     if (response.isSuccess) {
                         withContext(Dispatchers.Main) {
-                            Log.e("Q", "locations" + response.getOrNull())
                             response.getOrNull().also {
                                 if (it != null) {
-                                    location = it
+                                    city = it
+                                    Log.e("Q", "city" + city)
                                 }
                             }
                         }
