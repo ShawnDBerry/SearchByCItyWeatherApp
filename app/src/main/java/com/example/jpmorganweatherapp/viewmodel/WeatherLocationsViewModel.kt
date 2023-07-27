@@ -21,11 +21,11 @@ import javax.inject.Inject
 @HiltViewModel
 class WeatherLocationsViewModel @Inject constructor(private val weatherLocationsRepository: WeatherLocationsRepository) :
     ViewModel() {
-    val errorMessage = MutableLiveData<String>()
+    private val errorMessage = MutableLiveData<String>()
     private var city =
         City(null, null, null, null, null, null, null, null, null, null, null, null, null)
     var location = mutableStateOf(city)
-    var cityName = mutableStateOf("detroit")
+    var cityName = mutableStateOf("")
     private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
         onError("Exception handled: ${throwable.localizedMessage}")
     }
