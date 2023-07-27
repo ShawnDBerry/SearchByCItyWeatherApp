@@ -25,6 +25,7 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.example.jpmorganweatherapp.composables.WeatherInfoScreen
 import com.example.jpmorganweatherapp.ui.theme.JPMorganWeatherAppTheme
 import com.example.jpmorganweatherapp.viewmodel.WeatherLocationsViewModel
 import com.google.android.gms.location.*
@@ -33,6 +34,7 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+    private val viewModel: WeatherLocationsViewModel by viewModels()
     private var fusedLocationProvider: FusedLocationProviderClient? = null
     private val locationRequest: LocationRequest = LocationRequest.create().apply {
         interval = 30
@@ -56,6 +58,7 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         lifecycleScope.launch {
@@ -67,17 +70,20 @@ class MainActivity : ComponentActivity() {
                             modifier = Modifier.fillMaxSize(),
                             color = MaterialTheme.colors.background
                         ) {
-                            Greeting("Android")
+                            val cityName = viewModel.cityName.value
+                            WeatherInfoScreen(viewModel.location.value, cityName){ viewModel.getLocation(cityName) }
                         }
                     }
                 }
 
-                fusedLocationProvider = LocationServices.getFusedLocationProviderClient(this@MainActivity)
+                fusedLocationProvider =
+                    LocationServices.getFusedLocationProviderClient(this@MainActivity)
 
                 checkLocationPermission()
             }
         }
     }
+
     private fun checkLocationPermission() {
         if (ActivityCompat.checkSelfPermission(
                 this,
@@ -151,6 +157,7 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<String>,

@@ -9,7 +9,7 @@ import retrofit2.http.Query
 interface OpenWeatherService {
     @GET("weather?")
     suspend fun getLocation(
-        @Query("city name") cityName: String,
+        @Query("q") cityName: String,
         @Query("appid") apiKey: String
     ): Response<SnapshotMutableState<City>>
 }

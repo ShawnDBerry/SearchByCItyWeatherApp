@@ -1,6 +1,8 @@
 package com.example.jpmorganweatherapp.repository
 
+import android.util.Log
 import androidx.compose.runtime.snapshots.SnapshotMutableState
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import com.example.jpmorganweatherapp.model.City
 import com.example.jpmorganweatherapp.network.OpenWeatherService
 import kotlinx.coroutines.Dispatchers
@@ -17,10 +19,11 @@ class WeatherLocationsRepository @Inject constructor(private val itemsService: O
        return createFlow(cityName, aaid)
     }
 
-    private suspend fun createFlow(cityName: String, aaid: String): Flow<Result<SnapshotMutableState<City>?>>{
+    private suspend fun createFlow(cityName: String, aaid: String): Flow<Result<SnapshotMutableState<City>?>> {
         return flow {
             val result = itemsService.getLocation(cityName, aaid)
             if(result.isSuccessful){
+                Log.e("flow", result.toString())
                 emit(Result.success(result.body()))
             }
         }.flowOn(Dispatchers.IO)

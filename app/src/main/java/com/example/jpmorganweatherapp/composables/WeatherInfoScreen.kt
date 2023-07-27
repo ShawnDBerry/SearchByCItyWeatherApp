@@ -75,7 +75,7 @@ fun WeatherInfoScreen(
 @Composable
 fun Preview() {
     val weatherList = mutableListOf<Weather>()
-    val weather = Weather(12,"", "", "")
+    val weather = Weather(11,"", "", "")
     weatherList.add(weather)
     val city = City(
         Coord(12.23, 13.0), weatherList, "", Main(12.1, 12.2, 78.3, 98.3, 34, 323), 1321,
