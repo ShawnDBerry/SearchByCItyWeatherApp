@@ -3,5 +3,5 @@ Weather Application searchs for weather conditions by city name or city name, st
 using kotlin coroutines and MVVM structure.
 
 //if i more time i would debug why my _city variables not
-// updating my UI
+// updating my UI and consolidate my permissions call and make it more simplier
 //also add unit and mockito testing but i ran out of time.
