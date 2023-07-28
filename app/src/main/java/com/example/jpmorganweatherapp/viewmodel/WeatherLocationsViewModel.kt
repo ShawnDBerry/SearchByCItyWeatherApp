@@ -44,8 +44,10 @@ class WeatherLocationsViewModel @Inject constructor(private val weatherLocations
                             withContext(Dispatchers.Main) {
                                 response.getOrNull().also {
                                     if (it != null) {
+                                        //if i more time i would debug why my _city variables not
+                                        // updating my UI
                                         _city.value = it
-                                        Log.e("Q", "city" + city.value)
+                                        Log.e("Q", "Live Data City Object: " + city.value)
                                     }
                                 }
                             }
