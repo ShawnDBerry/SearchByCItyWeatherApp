@@ -46,6 +46,7 @@ class WeatherLocationsViewModel @Inject constructor(private val weatherLocations
                                     if (it != null) {
                                         //if i more time i would debug why my _city variables not
                                         // updating my UI
+                                        //also add testing but i ran out of time.
                                         _city.value = it
                                         Log.e("Q", "Live Data City Object: " + city.value)
                                     }
