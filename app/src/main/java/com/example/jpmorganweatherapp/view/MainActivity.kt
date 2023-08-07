@@ -16,10 +16,7 @@ import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Lifecycle
@@ -246,18 +243,5 @@ class MainActivity : ComponentActivity() {
     companion object {
         private const val MY_PERMISSIONS_REQUEST_LOCATION = 99
         private const val MY_PERMISSIONS_REQUEST_BACKGROUND_LOCATION = 66
-    }
-}
-
-@Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    JPMorganWeatherAppTheme {
-        Greeting("Android")
     }
 }
