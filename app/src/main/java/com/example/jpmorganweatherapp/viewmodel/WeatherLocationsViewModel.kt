@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.jpmorganweatherapp.model.City
 import com.example.jpmorganweatherapp.repository.WeatherLocationsRepository
-import com.example.jpmorganweatherapp.util.API_KEY
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
@@ -37,7 +36,7 @@ class WeatherLocationsViewModel @Inject constructor(private val weatherLocations
     fun getLocation(cityName: String?) {
         viewModelScope.launch(exceptionHandler) {
             if (cityName != null) {
-                weatherLocationsRepository.getLocation(cityName, API_KEY)
+                weatherLocationsRepository.getLocation(cityName)
                     .catch { exception -> onError(exception.message.toString()) }
                     .collect { response ->
                         if (response.isSuccess) {
