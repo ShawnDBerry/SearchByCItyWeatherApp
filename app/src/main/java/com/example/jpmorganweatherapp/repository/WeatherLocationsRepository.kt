@@ -9,9 +9,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
-
 class WeatherLocationsRepository @Inject constructor(private val itemsService: OpenWeatherService) {
-
 
    suspend fun getLocation(cityName: String): Flow<Result<City?>> {
        return createFlow(cityName)
@@ -25,5 +23,4 @@ class WeatherLocationsRepository @Inject constructor(private val itemsService: O
             }
         }.flowOn(Dispatchers.IO)
     }
-
 }
